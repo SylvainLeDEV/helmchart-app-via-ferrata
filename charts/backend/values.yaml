@@ -13,7 +13,7 @@ imagePullSecrets:
 service:
   main:
     ports:
-      https:
+      http:
         port: 3333
         targetPort: 3333
 
