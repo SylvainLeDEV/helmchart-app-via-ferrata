@@ -1,5 +1,33 @@
 apiVersion: v1
 entries:
+  chartdb:
+  - annotations:
+      artifacthub.io/changes: |-
+        - kind: changed
+          description: update chartdb/chartdb docker tag to v1.7.0
+    apiVersion: v2
+    appVersion: 1.7.0
+    created: "2025-02-20T14:29:35.981221415Z"
+    dependencies:
+    - name: common
+      repository: https://zekker6.github.io/helm-charts
+      version: 0.5.2
+    description: chartdb helm package
+    digest: cc77094b4cebba9664d33a2860137f9134b2c7f3cfc77465b76367182fc60d0d
+    home: https://github.com/zekker6/helm-charts/tree/master/charts/apps/chartdb
+    icon: https://www.chartdb.co/favicon-32x32.png
+    kubeVersion: '>=1.16.0-0'
+    maintainers:
+    - email: me@zekker.dev
+      name: zekker6
+      url: https://github.com/zekker6/
+    name: chartdb
+    sources:
+    - https://github.com/chartdbco/chartdb
+    - https://github.com/zekker6/helm-charts/tree/master/charts/apps/chartdb
+    urls:
+    - https://github.com/SylvainLeDEV/helmchart-app-via-ferrata/releases/download/chartdb-1.7.1/chartdb-1.7.1.tgz
+    version: 1.7.1
   via-ferrata-backend:
   - annotations:
       artifacthub.io/changes: "- kind: changed\n  add via-ferrata-app backend "
@@ -43,4 +71,4 @@ entries:
     urls:
     - https://github.com/SylvainLeDEV/helmchart-app-via-ferrata/releases/download/via-ferrata-backend-0.0.3/via-ferrata-backend-0.0.3.tgz
     version: 0.0.3
-generated: "2025-02-20T14:27:04.856993323Z"
+generated: "2025-02-20T14:29:35.981234479Z"
