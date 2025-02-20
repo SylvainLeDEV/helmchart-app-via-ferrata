@@ -1,0 +1,74 @@
+name: Dev - Backend Release Charts
+on:
+    push:
+        branches:
+            - main
+        paths:
+            - "charts/backend/**"
+
+jobs:
+    release:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+
+            - name: Configure Git
+              run: |
+                  git config user.name "$GITHUB_ACTOR"
+                  git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+
+            - name: Set up Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "18"
+
+            - name: Update Helm Chart Version
+              run: |
+                  VERSION=$(node -p "require('./backend/package.json').version")
+                  echo "New version: $VERSION"
+                  echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+                  # Sauvegarder le contenu original du fichier Chart.yaml
+                  ORIGINAL_CONTENT=$(cat helm/backend/Chart.yaml)
+
+                  # Modifier le fichier Chart.yaml            
+                  perl -pi -e "s/^version:.*/version: $VERSION/" helm/backend/Chart.yaml
+
+                  # Lire le contenu modifié du fichier Chart.yaml
+                  MODIFIED_CONTENT=$(cat helm/backend/Chart.yaml)
+
+                  # Comparer les contenus
+                  if [ "$ORIGINAL_CONTENT" = "$MODIFIED_CONTENT" ]; then
+                      echo "No changes detected in Chart.yaml. Exiting..."
+                      exit 1
+                  else
+                      echo "Chart.yaml updated successfully."
+                  fi
+
+            - name: Set up Helm
+              uses: azure/setup-helm@v4.3.0
+              with:
+                  version: v3.13.0
+
+            # - name: Run chart-releaser
+            #   uses: helm/chart-releaser-action@v1.7.0
+            #   with:
+            #       charts_dir: helm
+            #   env:
+            #       CR_TOKEN: "${{ secrets.TOKEN_GITHUB }}"
+
+            - name: Package Helm Chart
+              run: |
+                  helm dependency update helm/backend
+                  helm package helm/backend
+
+            - name: Publish Helm Chart to Nexus
+              env:
+                  NEXUS_USERNAME: ${{ vars.NEXUS_USERNAME }}
+                  NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
+                  VERSION: ${{ env.VERSION }}
+              run: |
+                  curl -u $NEXUS_USERNAME:$NEXUS_PASSWORD --upload-file via-ferrata-backend-$VERSION.tgz https://nexus.k.zethak.org/repository/via-ferrata-app/
