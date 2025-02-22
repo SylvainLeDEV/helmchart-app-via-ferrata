@@ -50,6 +50,28 @@ entries:
     urls:
     - https://github.com/SylvainLeDEV/helmchart-app-via-ferrata/releases/download/chartdb-1.7.1/chartdb-1.7.1.tgz
     version: 1.7.1
+  via-ferrata:
+  - annotations:
+      artifacthub.io/changes: "- kind: changed\n  add via-ferrata-app backend "
+    apiVersion: v2
+    appVersion: 1.0.0
+    created: "2025-02-22T10:38:32.23439601Z"
+    dependencies:
+    - name: common
+      repository: https://zekker6.github.io/helm-charts
+      version: 0.5.2
+    description: via-ferrata-app helm package
+    digest: 1160731b41323c74596c7d1bac2a7dec4f0303b80232f3ce7ab833accb449364
+    home: https://github.com/zekker6/helm-charts/tree/master/charts/apps/chartdb
+    kubeVersion: '>=1.16.0-0'
+    maintainers:
+    - email: me@zekker.dev
+      name: zekker6
+      url: https://github.com/zekker6/
+    name: via-ferrata
+    urls:
+    - https://github.com/SylvainLeDEV/helmchart-app-via-ferrata/releases/download/via-ferrata-1.0.1/via-ferrata-1.0.1.tgz
+    version: 1.0.1
   via-ferrata-backend:
   - annotations:
       artifacthub.io/changes: "- kind: changed\n  add via-ferrata-app backend "
@@ -93,4 +115,4 @@ entries:
     urls:
     - https://github.com/SylvainLeDEV/helmchart-app-via-ferrata/releases/download/via-ferrata-backend-0.0.3/via-ferrata-backend-0.0.3.tgz
     version: 0.0.3
-generated: "2025-02-22T10:21:32.640339761Z"
+generated: "2025-02-22T10:38:32.234405608Z"
