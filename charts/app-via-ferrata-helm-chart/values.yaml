@@ -1,0 +1,10 @@
+image:
+  # -- image repository
+  repository: sylvaindevmtp/app-via-ferrata
+  # -- image tag
+  tag: "*"
+  # -- image pull policy
+  pullPolicy: IfNotPresent
+
+imagePullSecrets:
+  - name: dockerhub-secret
